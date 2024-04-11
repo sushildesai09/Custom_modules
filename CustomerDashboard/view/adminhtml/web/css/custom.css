@@ -1,0 +1,168 @@
+.nisl_customerdashboard-customer-index .main-col {
+	/*display: flex;*/
+	/*flex-wrap: wrap;*/
+	margin: 0 -10px;
+}
+
+.nisl_customerdashboard-customer-index .customer-information {
+	display: flex;
+	flex-wrap: wrap;
+	flex: 0 0 50%;
+	padding: 0 10px;
+	width: 50%;
+	float: left;
+}
+.nisl_customerdashboard-customer-index .fieldset-wrapper-title {
+	flex: 0 0 100%;
+	align-self: flex-start;
+	margin-bottom: 12px;
+}
+.customer-information address {
+	flex: 1;
+	margin-left: 20px;
+}
+.customer-information table {
+	flex: 2;
+	width: auto;
+	margin: 0;
+}
+
+
+.nisl_customerdashboard-customer-index .diagram-wrap {
+	flex: 0 0 50%;
+	padding: 0 10px;
+	width: 50%;
+	float: right;
+}
+.dashboard-diagram .date-wrap {
+	display: flex;
+	margin-bottom: 10px;
+}
+.date-wrap input, .date-wrap select {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	height: 35px;
+	width: 120px;
+	padding-left: 10px;
+}
+.dashboard-diagram-switcher .label {
+	height: auto;
+	width: auto;
+	margin: 0;
+	position: relative;
+	clip: unset;
+}
+.dashboard-diagram label {
+	font-size: 12px;
+	color: #000;
+	margin-right: 10px !important;
+}
+.dashboard-diagram-switcher {
+	margin-bottom: 0;
+}
+.date-wrap .inner, .date-wrap .dashboard-diagram-switcher {
+	display: flex;
+	align-items: flex-end;
+}
+.date-wrap .inner {
+	margin-right: 20px;
+}
+
+
+.nisl_customerdashboard-customer-index .options-wrap {
+	padding: 0 10px;
+	float: left;
+	width: 50%;
+	margin-top: 30px;
+}
+
+.nisl_customerdashboard-customer-index .main-col::after {
+	display: block;
+	clear: both;
+	content: "";
+}
+
+
+.nisl_customerdashboard-customer-index #customers_grid {
+	float: left;
+	width: 70%;
+	padding: 0 10px;
+}
+.nisl_customerdashboard-customer-index .skutable-wrapperz {
+	float: right;
+	width: 30%;
+	padding: 0 10px;
+}
+.nisl_customerdashboard-customer-index .customer-comments {
+	float: right;
+	width: 50%;
+	padding: 0 10px;
+	margin-top: 30px;
+}
+
+.skutable-wrapperz .admin__data-grid-toolbar .admin__control-support-text {
+	font-size: 12px;
+}
+.skutable-wrapperz .admin__data-grid-toolbar .action-previous {
+	margin-right: 5px;
+}
+.skutable-wrapperz .admin__data-grid-toolbar .action-next {
+	margin-left: 5px;
+}
+.skutable-wrapperz .admin__data-grid-toolbar .admin__data-grid-pager [class*="action-"] {
+	width: 30px;
+	padding: 0;
+	height: 30px;
+}
+.skutable-wrapperz .admin__data-grid-toolbar .admin__data-grid-pager {
+	margin-left: 5px;
+}
+.skutable-wrapperz .admin__data-grid-toolbar .admin__data-grid-pager .admin__control-text {
+	padding: 0 5px;
+	height: 30px;
+	width: 40px;
+	min-width: 0;
+}
+.skutable-wrapperz .admin__data-grid-toolbar .admin__data-grid-pager .admin__control-support-text {
+	margin-left: 0;
+}
+.skutable-wrapperz .admin__data-grid-toolbar .selectmenu-value input[type="text"] {
+	width: 50px;
+}
+
+.skutable-wrapperz .admin__data-grid-toolbar .admin__data-grid-pager-wrap .selectmenu, .skutable-wrapperz .admin__data-grid-toolbar .admin__data-grid-pager-wrap .selectmenu + .admin__control-support-text {
+	display: none;
+}
+
+.skutable-wrapperz .admin__data-grid-toolbar .admin__data-grid-header-row > div {
+	margin-left: 0;
+}
+
+
+
+
+
+.skutable-wrapperz .date-wrap-report {
+	display: flex;
+	align-items: center;
+	margin: 0 -10px;
+}
+.skutable-wrapperz .date-wrap-report .inner-report {
+	padding: 0 10px;
+	flex: 1;
+}
+.skutable-wrapperz .date-wrap-report .inner-report label {
+	display: block;
+}
+.skutable-wrapperz .date-wrap-report .inner-report input {
+	display: block;
+	width: 100%;
+}
+
+#dashboard_diagram_totals{
+	flex: 0 0 50%;
+    padding: 0 10px;
+    width: 48%;
+    float: right
+}
+    

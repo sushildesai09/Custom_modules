@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+     <css src="Nisl_CustomerDashboard::css/custom.css"/>
+   </head>
+   
+    <body>    	    
+       <!-- <referenceContainer name="page.main.actions">
+                <settings>
+                    <buttons>
+                        <button name="save" class="Magento\Backend\Block\Adminhtml\Custom\Edit\SaveButton"/>
+                        <button name="back" class="Magento\Backend\Block\Adminhtml\Custom\Edit\BackButton"/>
+                    </buttons>                    
+                </settings>            
+        </referenceContainer>-->
+        <referenceContainer name="content">
+               <block class="Nisl\CustomerDashboard\Block\Adminhtml\CustomerDetails" name="customer-details" template="Nisl_CustomerDashboard::customer/edit.phtml"  /> 
+                <block class="Nisl\CustomerDashboard\Block\Adminhtml\CustomerChart" template="Nisl_CustomerDashboard::customer/chart.phtml"  /> 
+                <block class="Nisl\CustomerDashboard\Block\Adminhtml\Totals" template="Nisl_CustomerDashboard::dashboard/totalbar.phtml"  /> 
+                <block class="Nisl\CustomerDashboard\Block\Adminhtml\CustomerReschedule" template="Nisl_CustomerDashboard::customer/reschedule.phtml"  />
+                <block class="Nisl\CustomerDashboard\Block\Adminhtml\CustomerComment" template="Nisl_CustomerDashboard::customer/comment.phtml"  />  
+                <block class="Nisl\CustomerDashboard\Block\Adminhtml\CustomerReport" name="adminhtml.report.grid.container"/>
+                <block class="Nisl\CustomerDashboard\Block\Adminhtml\ReportFilter" name="report-filter" template="Nisl_CustomerDashboard::report/filter.phtml"  />               
+                <block class="Nisl\CustomerDashboard\Block\Adminhtml\Widget\Grid" name="report_grid_listing" as="custom.grid" />
+                
+                                                       
+        </referenceContainer>
+        <referenceBlock name="adminhtml.report.grid.container">                
+            <block class="Magento\Backend\Block\Widget\Grid" name="adminhtml.block.report.review.customer.grid" as="grid">                
+                <arguments>
+                    <argument name="id" xsi:type="string">customers_grid</argument>
+                    <argument name="default_sort" xsi:type="string">increment_id</argument>
+                    <argument name="default_dir" xsi:type="string">desc</argument>
+                    <argument name="use_ajax" xsi:type="string">1</argument>
+                     <argument name="grid_url" xsi:type="url" path="*/report/sales">
+                            <param name="_current">1</param>
+                        </argument>
+                    <argument name="dataSource" xsi:type="object" shared="false">Nisl\CustomerDashboard\Model\ResourceModel\CustomerOrders</argument>
+                </arguments>
+               
+                <block class="Magento\Backend\Block\Widget\Grid\ColumnSet" as="grid.columnSet" name="adminhtml.block.report.review.customer.grid.columnSet">
+                    <arguments>
+                        <argument name="filter_visibility" xsi:type="string">1</argument> 
+                        
+                        <argument name="id" xsi:type="string">customers_grid</argument>
+                       
+                    </arguments>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" name="adminhtml.block.report.nisl.order.incrementid" as="increment_id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Order</argument>
+                            <argument name="index" xsi:type="string">increment_id</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                            <argument name="id" xsi:type="string">increment_id</argument>
+                            
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" name="adminhtml.block.report.nisl.order.purchase.date" as="created_at">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Purchased</argument>
+                            <argument name="type" xsi:type="string">datetime</argument>
+                            <argument name="index" xsi:type="string">created_at</argument>
+                            
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" name="adminhtml.block.report.nisl.order.bill.name" as="bill_to_name">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Bill to Name</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                            <argument name="index" xsi:type="string">bill_to_name</argument>
+                            
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" name="adminhtml.block.report.nisl.order.ship.name" as="ship_to_name">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Ship to Name</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                            <argument name="index" xsi:type="string">ship_to_name</argument>
+                            
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" name="adminhtml.block.report.nisl.order.total" as="base_grand_total">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Order Total</argument>
+                            <argument name="type" xsi:type="string">range</argument>
+                            <argument name="index" xsi:type="string">base_grand_total</argument>
+                            
+                        </arguments>
+                    </block>
+                    <block class="Magento\Backend\Block\Widget\Grid\Column" name="adminhtml.block.report.nisl.order.products" as="product_id">
+                        <arguments>
+                            <argument name="header" xsi:type="string" translate="true">Products</argument>
+                            <argument name="type" xsi:type="string">text</argument>
+                            <argument name="index" xsi:type="string">product_id</argument>
+                            
+                        </arguments>
+                    </block>
+                   
+                </block>
+            </block>
+
+              
+        </referenceBlock>
+
+
+    </body>
+</page>

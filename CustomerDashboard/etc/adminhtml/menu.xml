@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Nisl_CustomerDashboard::dash" title="Customer Dashboard" module="Nisl_CustomerDashboard" sortOrder="51" resource="Nisl_CustomerDashboard::dash"  action="nisl_customerdashboard/index/index"/>       
+    </menu>
+</config>

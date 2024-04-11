@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!--<type name="Nisl\CustomerDashboard\Ui\DataProvider\Category\ListingDataProvider">
+	   <plugin name="customerdashboard_grid_attributes" type="Nisl\CustomerDashboard\Plugin\AddAttributesToUiDataProvider"/>
+	</type>-->
+
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+	  <arguments>
+	   <argument name="collections" xsi:type="array">
+	     <item name="customerdashboard_customer_listing_data_source" xsi:type="string">CustomerDashboardCollection</item>
+	   </argument>
+	  </arguments>
+	</type>
+	<virtualType name="CustomerDashboardCollection" type="Nisl\CustomerDashboard\Ui\DataProvider\Customer\Listing\Collection">
+	   <arguments>
+	     <argument name="mainTable" xsi:type="string">customer_entity</argument>
+	     <argument name="resourceModel" xsi:type="string">Nisl\CustomerDashboard\Model\ResourceModel\Customer</argument>
+	   </arguments>
+	</virtualType>
+
+
+
+
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+	  <arguments>
+	   <argument name="collections" xsi:type="array">
+	     <item name="customreport_listing_data_source" xsi:type="string">CustomReport</item>
+	   </argument>	    
+	  </arguments>
+	</type>
+
+	<virtualType name="CustomReport" type="Nisl\CustomerDashboard\Ui\DataProvider\CustomReport\Listing\Collection">
+	   <arguments>
+	     <argument name="mainTable" xsi:type="string">sales_order_item</argument>
+	     <argument name="resourceModel" xsi:type="string">Nisl\CustomerDashboard\Model\ResourceModel\Order</argument>	    
+	   </arguments>
+	</virtualType>
+	 
+
+</config>

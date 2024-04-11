@@ -1,0 +1,50 @@
+<div class="customer-comments">
+  <div class="order-history-block" id="history_form">
+    <div class="admin__field">
+    <label for="history_comment" class="admin__field-label">
+        <?= $block->escapeHtml(__('Comment')) ?>
+    </label>
+    <div class="admin__field-control">
+        <textarea name="custom_comment"
+                  rows="3"
+                  cols="5"
+                  id="custom_comment"
+                  class="admin__control-textarea"></textarea>
+    </div>
+    </div>
+    <div class="order-history-comments-actions">
+    <button id="test_abc" title="Submit Comment" type="button" class="action-default scalable action-save action-secondary" >
+    <span>Submit Comment</span>
+    </button>
+    </div>
+  </div>
+  <div class="show-comments">  
+    <?php echo $block->CommentCollection(); ?>
+  </div>
+<script>
+require(['jquery', 'jquery/ui'], function($){
+        //var ajaxRequest;
+
+        $('#test_abc').click(function(){
+          ajaxRequest_comment();  
+        })
+        ajaxRequest_comment = function(){
+            jQuery.ajax({
+              url: "<?php echo $this->getUrl('nisl_customerdashboard/customer/comment'); ?>",
+              type: 'POST',
+              data: {form_key: window.FORM_KEY,'customer_comment':$('#custom_comment').val(),'customer_id':<?php echo $block->getCustomerId() ?>}, //exemple
+              dataType: 'json',
+               showLoader: true
+          }).done(function (response, textStatus, jqXHR) {            
+              jQuery('.show-comments').html(response);
+              $('#custom_comment').val('');
+            
+          }); 
+        }
+
+            //Show successfully for submit message
+        
+    });
+</script>
+
+</div>

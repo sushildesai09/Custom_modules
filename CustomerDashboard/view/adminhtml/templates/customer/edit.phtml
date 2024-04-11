@@ -1,0 +1,56 @@
+<?php 
+/* Nisl\CustomerDashboard\Block\Adminhtml\CustomerDetails $block */
+
+$lastLoginDateAdmin = $block->getLastLoginDate();
+
+$lastLoginDateStore = $block->getStoreLastLoginDate();
+$createDateAdmin = $block->getCreateDate();
+$orderDetails = $block->getOrderDetails();
+
+$allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub', 'sup', 'ul'];
+?>
+<div class="fieldset-wrapper customer-information">
+    <div class="fieldset-wrapper-title">
+        <span class="title"><?= $block->escapeHtml(__('Personal Information')) ?></span>
+    </div>
+    <table class="admin__table-secondary">
+        <tbody>
+            <tr>
+                <th><?= $block->escapeHtml(__('ID')) ?></th>
+                <td><?= $block->escapeHtml($block->getCustomer()->getId()) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Last Logged In:')) ?></th>
+                <td><?= $block->escapeHtml($lastLoginDateAdmin) ?> (<?= $block->escapeHtml($block->getCurrentStatus()) ?>)</td>
+            </tr>
+                    
+            <tr>
+                <th><?= $block->escapeHtml(__('Account Created:')) ?></th>
+                <td><?= $block->escapeHtml($createDateAdmin) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Email:')) ?></th>
+                <td><?= $block->escapeHtml($block->getCustomer()->getEmail()) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Order Frequency (In Days):')) ?></th>
+                <td><?= $block->escapeHtml($orderDetails['order_frequency']) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Last Date of Order:')) ?></th>
+                <td><?= $block->escapeHtml($block->changeDateFormat($orderDetails['last_order'])) ?></td>
+            </tr>
+
+    </tbody>
+
+</table>
+<address>
+                <strong><?= $block->escapeHtml(__('Default Billing Address')) ?></strong><br/>
+                <?= $block->escapeHtml($block->getBillingAddressHtml(), $allowedAddressHtmlTags) ?>
+            </address>
+
+            <address>
+                <strong><?= $block->escapeHtml(__('Default Shipping Address')) ?></strong><br/>
+                <?= $block->escapeHtml($block->getBillingAddressHtml(), $allowedAddressHtmlTags) ?>
+            </address>
+</div>

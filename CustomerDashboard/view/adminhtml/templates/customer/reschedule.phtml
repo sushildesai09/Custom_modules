@@ -1,0 +1,64 @@
+<?php $data = $block->RescheduleCollection();?>
+<?php $defaultDate = isset($data[0]['customer_reschedule_date'])?$data[0]['customer_reschedule_date']:''; 
+if($defaultDate != ''){
+  $defaultDate = date("d-m-Y", strtotime($defaultDate));  
+}
+
+
+$defaultActive = isset($data[0]['customer_active'])?$data[0]['customer_active']:''; 
+?>
+<div class="options-wrap">
+<h2 class="fieldset-wrapper-title"><span class="title">Options</span></h2>
+<div class="row mb-3">
+  <div class="col-xs-4">
+    <p>ACTION IF NOT ORDERED FOR A WHILE (RESCHEDULE)</p>    
+  </div>
+  <div class="col-xs-8">
+    <input type="text" name="reschedule-date" id="reschedule-date" value="<?= $defaultDate ?>" class="datepicker" />    
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-4">
+    <p>NON ACTIVE CUSTOMER</p>    
+  </div>
+  <div class="col-xs-8">
+    <input type="checkbox" name="non-active" id="non-active" <?php if($defaultActive == 1){ echo "checked = checked";} ?> />
+  </div>
+</div>
+<script>
+require(["jquery", "mage/calendar"], function($){
+        $("#reschedule-date").datepicker({
+          showMonthAfterYear: false,
+          dateFormat:'dd-mm-yy',
+          changeMonth: true,
+          changeYear: true,
+          minDate: 0,          
+          yearRange: '2021:2040',
+        });
+
+        $('#reschedule-date,#non-active').change(function(){
+          ajaxRequest();  
+        });
+        ajaxRequest = function(){
+            jQuery.ajax({
+              url: "<?php echo $this->getUrl('nisl_customerdashboard/customer/reschedule'); ?>",
+              type: 'POST',
+              data: {form_key: window.FORM_KEY,'customer_reschedule_date':$('#reschedule-date').val(),'customer_id':<?php echo $block->getCustomerId() ?>,'customer_active':$('#non-active').is(":checked")}, //exemple
+              dataType: 'json',
+              showLoader: true
+             
+          }).done(function (response, textStatus, jqXHR) {            
+              
+              if(textStatus == "success"){
+             	alert("Customer follow up rescheduled"); 	
+              }else{
+              	alert("something went wrong");
+              }
+             
+          }); 
+        }
+
+
+});
+</script>
+</div>

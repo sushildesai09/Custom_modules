@@ -1,0 +1,160 @@
+<div class="diagram-wrap">
+<div class="fieldset-wrapper-title"><span class="title"><?= $block->escapeHtml(__('Chart')) ?></span></div>
+
+
+
+<script>
+require(["jquery", "mage/calendar"], function($){
+        $("#from-date,#to-date").datepicker({
+          showMonthAfterYear: false,
+          dateFormat:'mm/dd/yy',
+          changeMonth: true,
+          changeYear: true,
+          yearRange: '2015:2040',
+        })
+});
+</script>
+
+<div class="dashboard-diagram">
+    <div class="date-wrap">
+        <div class="inner">
+            <label>From : </label>
+            <input type="text" name="from-date" id="from-date" value="" class="datepicker" onchange="changeDiagramsPeriod();">
+        </div>
+        <div class="inner">
+            <label>To : </label>
+            <input type="text" name="to-date" id="to-date" value="" class="datepicker" onchange="changeDiagramsPeriod();">
+        </div>
+        <div class="dashboard-diagram-switcher">
+            <label for="order_<?= $block->getHtmlId() ?>_period"
+                   class="label"><?= $block->escapeHtml(__('Chart By:')) ?></label>
+            <select name="period" id="order_<?= $block->getHtmlId() ?>_period"
+                    onchange="changeDiagramsPeriod();" class="admin__control-select">
+                <?php //phpcs:disable ?>
+                <?php foreach ($this->helper(\Magento\Backend\Helper\Dashboard\Data::class)->getDatePeriods() as $value => $label) : ?>
+                    <?php
+                    //phpcs:enable
+                    if (in_array($value, ['custom'])) {
+                        continue;
+                    } ?>
+                    <option value="<?= /* @noEscape */ $value ?>"
+                        <?php if ($block->getRequest()->getParam('period') == $value) : ?> selected="selected"<?php endif; ?>
+                        ><?= $block->escapeHtml($label) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    
+     
+    <div id="complete-graph">          
+    <?php if ($block->getCount()) : ?>
+    <div class="dashboard-diagram-image">
+        <img src="<?= $block->escapeUrl($block->getChartUrl(false)) ?>" class="dashboard-diagram-chart" alt="Chart" title="Chart" />
+    </div>
+    <?php else : ?>
+    <div class="dashboard-diagram-nodata">
+        <span><?= $block->escapeHtml(__('No Data Found')) ?></span>
+    </div>
+    <?php endif; ?>
+    </div>
+</div>
+
+
+<?php /*if (count($block->getTotals()) > 0) : ?>
+<div class="dashboard-totals" id="dashboard_diagram_totals">
+    <ul class="dashboard-totals-list">
+        <?php foreach ($block->getTotals() as $_total) : ?>
+            <li class="dashboard-totals-item">
+                <span class="dashboard-totals-label"><?= $block->escapeHtml($_total['label']) ?></span>
+                <strong class="dashboard-totals-value">
+                    <?= /* @noEscape *\/ $_total['value'] ?>
+                    <span class="dashboard-totals-decimals"><?= /* @noEscape *\/ $_total['decimals'] ?></span>
+                </strong>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; */?>
+
+
+<script>
+require([    
+    'Magento_Ui/js/modal/alert',
+    'prototype'
+], function(alert){
+
+     
+document.getElementById("order_amount_period").value  = '1y'; 
+
+window.changeDiagramsPeriod = function() {
+
+    periodVal = document.getElementById('order_amount_period').value;
+    fromdate = document.getElementById('from-date').value;
+    todate = document.getElementById('to-date').value;
+    //periodParam = '';
+    if(fromdate != '' && todate != ''){
+         periodParam =  'period/' + periodVal + '/fromdate/' + fromdate.replaceAll("/", "-") + '/todate/' + todate.replaceAll("/", "-") + '/' ;
+    }else{
+        periodParam = periodVal ? 'period/' + periodVal + '/' : '';
+    }
+
+    
+    
+    ajaxBlockParam = 'block/tab_amounts/';
+    ajaxBlockUrl = '<?= $block->escapeJs($block->getUrl('nisl_customerdashboard/chart/ajaxBlock', ['_current' => true, 'block' => '', 'period' => ''])) ?>' + ajaxBlockParam + periodParam;
+    new Ajax.Request(ajaxBlockUrl, {
+        parameters: {isAjax: 'true', form_key: FORM_KEY},
+        onSuccess: function(transport) {
+            tabContentElementId = 'complete-graph';
+            try {
+                if (transport.responseText.isJSON()) {
+                    var response = transport.responseText.evalJSON()
+                    if (response.error) {
+                        alert({
+                            content: response.message
+                        });
+                    }
+                    if(response.ajaxExpired && response.ajaxRedirect) {
+                        setLocation(response.ajaxRedirect);
+                    }
+                } else {
+                    $(tabContentElementId).update(transport.responseText);
+                }
+            }
+            catch (e) {
+                $(tabContentElementId).update(transport.responseText);
+            }
+        }
+    });
+  
+    ajaxBlockUrl = '<?= $block->escapeJs($block->getUrl('nisl_customerdashboard/totals/ajaxBlock', ['_current' => true, 'block' => 'totals', 'period' => ''])) ?>' + periodParam;
+    new Ajax.Request(ajaxBlockUrl, {
+        parameters: {isAjax: 'true', form_key: FORM_KEY},
+        onSuccess: function(transport) {
+            tabContentElementId = 'dashboard_diagram_totals';
+            try {
+                if (transport.responseText.isJSON()) {
+                    var response = transport.responseText.evalJSON();
+                    if (response.error) {
+                        alert({
+                            content: response.message
+                        });
+                    }
+                    if(response.ajaxExpired && response.ajaxRedirect) {
+                        setLocation(response.ajaxRedirect);
+                    }
+                } else {
+                    $(tabContentElementId).replace(transport.responseText);
+                }
+            }
+            catch (e) {
+                $(tabContentElementId).replace(transport.responseText);
+            }
+        }
+    });
+}
+
+});
+</script> 
+
+</div>

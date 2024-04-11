@@ -1,0 +1,69 @@
+ <div class="skutable-wrapperz">
+
+ <div class="date-wrap-report">
+        <div class="inner-report">
+            <label>From : </label>
+            <input type="text" name="report-from-date" id="report-from-date" value="" class="datepicker" onchange="changeReportGrid();" >
+        </div>
+        <div class="inner-report">
+            <label>To : </label>
+            <input type="text" name="report-to-date" id="report-to-date" value="" class="datepicker" onchange="changeReportGrid();" >
+        </div>
+        
+    </div>
+
+<script>
+require(["jquery", "mage/calendar"], function($){
+        $("#report-from-date,#report-to-date").datepicker({
+          showMonthAfterYear: false,
+          dateFormat:'dd/mm/yy',
+          changeMonth: true,
+          changeYear: true,
+          yearRange: '2015:2040',
+        })
+});
+
+window.changeReportGrid = function() {
+
+	
+    fromdate = document.getElementById('report-from-date').value;
+    todate = document.getElementById('report-to-date').value;
+
+
+    //periodParam = '';
+    if(fromdate != '' && todate != ''){
+
+    	
+        periodParam =  'fromdate/' + fromdate.replaceAll("/", "-") + '/todate/' + todate.replaceAll("/", "-") + '/' ;
+        ajaxBlockUrl = '<?= $block->escapeJs($block->getUrl('nisl_customerdashboard/report/index', ['_current' => true, 'period' => ''])) ?>'  + periodParam;
+
+		new Ajax.Request(ajaxBlockUrl, {
+	        parameters: {isAjax: 'true', form_key: FORM_KEY},
+	        onSuccess: function(transport) {
+	        	console.log(transport);
+	            tabContentElementId = '#custom_report_grid';
+	            try {
+	                if (transport.responseText.isJSON()) {
+	                    var response = transport.responseText.evalJSON()
+
+	                    if (response.error) {
+	                        alert({
+	                            content: response.message
+	                        });
+	                    }
+	                    if(response.ajaxExpired && response.ajaxRedirect) {
+	                        setLocation(response.ajaxRedirect);
+	                    }
+	                } else {	                	
+	                    jQuery(tabContentElementId).replaceWith(transport.responseText);
+	                }
+	            }
+	            catch (e) {
+	                jQuery(tabContentElementId).replaceWith(transport.responseText);
+	            }
+	        }
+	    });
+
+    }
+}
+</script>
